@@ -127,5 +127,11 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/maotoumao/MusicFree.git"
+  },
+  "overrides": {
+    "@react-native-clipboard/clipboard": {
+      "react-native": "~0.74.0",
+      "react-native-windows": "~0.74.0"
+    }
   }
 }
