@@ -2,10 +2,7 @@ import axios from 'axios';
 import {compare} from 'compare-versions';
 import DeviceInfo from 'react-native-device-info';
 
-const updateList = [
-    'https://gitee.com/maotoumao/MusicFree/raw/master/release/version.json',
-    'https://raw.githubusercontent.com/maotoumao/MusicFree/master/release/version.json',
-];
+const updateList = [];//剔除升级检测
 
 interface IUpdateInfo {
     needUpdate: boolean;
