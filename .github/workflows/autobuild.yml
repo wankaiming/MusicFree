@@ -1,36 +1,8 @@
 name: 自动构建
 on:
   workflow_dispatch:
-  pull_request:
-    types:
-      - closed
 
 jobs:
-  build-android:
-    if: "github.event.pull_request.merged == true && startsWith(github.event.pull_request.title, 'release: ')"
-    runs-on: ubuntu-latest
-    steps:
-      - env: 
-          REQBODY: ${{github.event.pull_request.body}}
-        run: |
-          echo "${REQBODY}"
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Setup Env
-        uses: actions/setup-node@v3
-        with: 
-          node-version: 16
-      - name: Install Pkgs
-        run: npm ci
-      - name: Get Version
-        run: node -p -e '`VERSION=${require("./package.json").version}`' >> $GITHUB_ENV
-      - name: Build
-        run: | 
-          cd ./android
-          ./gradlew assembleRelease
-      - name: Generate Changelog
-        run: echo github.event_name
   manual: 
     runs-on: ubuntu-latest
     if: "github.event_name == 'workflow_dispatch'"
@@ -42,10 +14,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt' # See 'Supported distributions' for available options
+          java-version: '17'
+
       - name: Setup Env
         uses: actions/setup-node@v3
         with: 
-          node-version: 16
+          node-version: 18
       - name: Install Pkgs
         run: npm ci
       - name: Get Version
@@ -53,5 +30,11 @@ jobs:
       - name: Build
         run: | 
           cd ./android
+          chmod +x ./gradlew
           ./gradlew assembleRelease
+      - name: Uploading APK
+        uses: actions/upload-artifact@v4
+        with:
+            name: apk
+            path: ./android/app/build/outputs/apk/release
       

@@ -86,7 +86,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 static def getVersion() {
-    return "0.4.1"
+    return "0.4.2"
 }
 
 // static def versionStringToCode(String version) {
