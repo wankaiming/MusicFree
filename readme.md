@@ -141,3 +141,9 @@
 
 - 作者信息
   ![专辑信息](./.imgs/artist-detail.jpg)
+
+
+#### 编译为apk文件
+cd ./android
+chmod +x ./gradlew
+./gradlew assembleRelease
